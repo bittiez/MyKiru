@@ -526,7 +526,7 @@ public class MyKiruGUI extends javax.swing.JFrame {
                             }
 
                             Downloader file = new mykiru.Downloader();
-                            String[] args = {update_files + "/UOAU/files/" + fn, settings.UO_DIR.getText() + "/" + fn};
+                            String[] args = {update_files + "/UOAU/Files/" + fn, settings.UO_DIR.getText() + "/" + fn};
                             JLabel[] labels = {DL_current, DL_speed};
                             JCheckBox[] pc = {Paused, Canceled};
                             //fs.w("Downloading " + fn + "...", text);
