@@ -1,0 +1,8 @@
+
+<updateurl>http://216.155.140.90</updateurl> //No trailing slash
+<title>SkelderGate</title> //Set updater title
+<feedurl>http://uokiru.com/updates.html</feedurl> //Url to display in updater
+<usericon>icon.png</usericon> // Must be inside same folder as this config(/bin/)
+<razor>false</razor> //Allow razor
+<assistuo>false</assistuo> //Allow assistuo
+<DefaultUODir>C:\Program Files\UO</DefaultUODir>Cannot be blank, No trailing slash

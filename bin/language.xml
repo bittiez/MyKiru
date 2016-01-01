@@ -1,0 +1,65 @@
+<failedtoloadicon>Failed to load the icon you have set in your configuration.({User_Icon})</failedtoloadicon> {User_Icon} = Specified icon file name(In config)
+
+<filelist>Retrieving list of files to download..</filelist>
+
+<filecount>There are {File_Count} files to compare with your current files.</filecount> {File_Count} = Amount of files needed to download
+
+<notallowed>The file "{FileName}" could not be downloaded because it is not on your allowed list, skipping the file.</notallowed> {FileName} = File name
+
+<skipfile>Skipping "{FileName}", your version of this file is up-to-date.</skipfile> {FileName} = File name
+
+<downloadfile>A newer version of "{FileName}" is available, downloading now..</downloadfile> {FileName} = File name
+
+<errordownloadingfile>There was an error downloading the file "{FileName}".</errordownloadingfile> {FileName} = File name, {Error_Message} = Actual error message
+
+<fullclientfail>Failed to download the full client.</fullclientfail> {Error_Message} = Actual error message
+
+<downloadsuccess>Successfully downloaded {FileName}.</downloadsuccess> {FileName} = File name
+
+<download_canceled>Canceled file "{FileName}".</download_canceled> {FileName} = File name
+
+<fullclientcancel>Full client download canceled.</fullclientcancel>
+
+<install_success>Installed successfully.</install_success>
+
+<install_error>There was an error installing the client.</install_error> No error message available here..
+
+<install_location>Full client downloaded, where would you like to install?</install_location>
+
+<download_full_client>Attempting to download the full client..</download_full_client>
+
+<full_client_not_offered>This server does not provide the full client.</full_client_not_offered>
+
+<choose_ultima_dir>You must choose your ultima online directory.</choose_ultima_dir>
+
+<error_reading_config>There was an error reading your config file.</error_reading_config> {Error_Message} = Actual error message
+
+<failed_to_load_browser>Failed to open your web browser.</failed_to_load_browser> {Error_Message} = Actual error message
+
+<failed_to_load_newsfeed>Failed to load news feed.</failed_to_load_newsfeed> {Error_Message} = Actual error message
+
+<error_connecting_to_server>There was an error conecting to the server to check for updates.</error_connecting_to_server> {Error_Message} = Actual error message
+
+<connecting_to_server>Connecting to server to check for updates..</connecting_to_server> {Update_Url} = Full update url
+
+<fullclient_start_extraction>Installing...</fullclient_start_extraction>
+
+<file_list_fail>There was an error retrieving the file list.</file_list_fail>
+
+<current_file_extracting>Installing {FileName}</current_file_extracting> {FileName} = Current file being extracted
+
+<update_your_kiru>Your server is using MyKiru {Server_Kiru_Version}, you are using MyKiru {Client_Kiru_Version}. To continue, 
+you need to download MyKiru {Server_Kiru_Version} from http://uokiru.com(MyKiru->UOKiru.com).</update_your_kiru> {Server_Kiru_Version}, {Client_Kiru_Version}
+
+
+
+
+Applications buttons/etc
+<check_for_updates>Check for updates</check_for_updates>
+
+<full_client_download>Install the game</full_client_download>
+
+<pause_pause>Pause</pause_pause>
+<pause_continue>Continue</pause_continue>
+
+<cancel_button>Cancel</cancel_button>

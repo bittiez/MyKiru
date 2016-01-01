@@ -1,0 +1,7 @@
+<updateurl>http://thehallo.ws/services</updateurl> //No trailing slash
+<title>MyKiru</title> //Set updater title
+<feedurl>http://uokiru.com/updates.html</feedurl> //Url to display in updater
+<usericon>icon.png</usericon> // Must be inside same folder as this config(/bin/)
+<razor>true</razor> //Allow razor
+<assistuo>true</assistuo> //Allow assistuo
+<DefaultUODir>C:\Program Files\UO</DefaultUODir>Cannot be blank, No trailing slash
