@@ -51,6 +51,7 @@
 <update_your_kiru>Your server is using MyKiru {Server_Kiru_Version}, you are using MyKiru {Client_Kiru_Version}. To continue, 
 you need to download MyKiru {Server_Kiru_Version}! Contact your server administrators to find out how.</update_your_kiru> {Server_Kiru_Version}, {Client_Kiru_Version}
 
+<failed_to_download_full_client>There was an error while trying to download the full client.</failed_to_download_full_client>
 
 
 

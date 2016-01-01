@@ -390,7 +390,7 @@ public class MyKiruGUI extends javax.swing.JFrame {
             public void run() {
 
                 try {
-                    URL game = new URL(update_files + "/UOAU/fullclient.php?active");
+                    URL game = new URL(update_files + "/UOAU/?data=offerfullclient");
                     URLConnection connection = game.openConnection();
                     try (BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
                         String data = "";
@@ -406,17 +406,19 @@ public class MyKiruGUI extends javax.swing.JFrame {
                             case "true": {
                                 fs.w(fs.find_message("download_full_client", lang()), text);
                                 String[] file_data = fs.full_Client(update_files);
+                                
                                 if ("FAIL".equals(file_data[0])) {
                                     fs.w(fs.find_message("fullclientfail", lang(), "{Error_Message}", "Error retrieving full client download location."), text);
                                     break;
                                 }
                                 Downloader file = new mykiru.Downloader();
                                 String[] args = {update_files + "/UOAU/" + file_data[1], settings.UO_DIR.getText() + "/" + file_data[1]};
+                                System.out.println(args[0]);
                                 JLabel[] labels = {DL_current, DL_speed};
                                 JCheckBox[] pc = {Paused, Canceled};
                                 try {
                                     onStartDL();
-                                    file.main(args, sub_progress, labels, pc);
+                                    boolean status = file.main(args, sub_progress, labels, pc);
                                     if (Canceled.isSelected() == true) {
                                         fs.w(fs.find_message("fullclientcancel", lang()), text);
                                         Canceled.setEnabled(false);
@@ -424,6 +426,11 @@ public class MyKiruGUI extends javax.swing.JFrame {
                                         onFinishDL();
                                         break;
                                     }
+                                    if(!status){
+                                        fs.w(fs.find_message("failed_to_download_full_client", lang()), text);
+                                        break;
+                                    }
+                                    
                                     fs.w(fs.find_message("install_location", lang()), text);
                                     ExtractFile ex = new mykiru.ExtractFile();
                                     onFinishDL();
