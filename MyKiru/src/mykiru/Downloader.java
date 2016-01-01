@@ -45,6 +45,7 @@ public class Downloader extends JFrame {
             java.io.BufferedOutputStream bout = new BufferedOutputStream(fos, 1024);
             byte[] data = new byte[1024];
             int i;
+            int flush = 0;
             while ((i = in.read(data, 0, 1024)) >= 0 && pc[1].isSelected() != true) {
                 while (pc[0].isSelected() == true) {
                     TimeUnit.SECONDS.sleep(1);
@@ -59,6 +60,12 @@ public class Downloader extends JFrame {
 
                 totalDataRead = totalDataRead + i;
                 bout.write(data, 0, i);
+                if(flush > 50){
+                    flush = 0;
+                    bout.flush();
+                }
+                flush++;
+                    
                 current.setValue((int) totalDataRead);
                 labels[0].setText(fs.formatint((int) totalDataRead) + "/" + fs.formatint(filesize));
                 labels[1].setText("(~" + fs.formatint((int) mbs) + "/s)");
