@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-/*
+ /*
 Runnable aRunnable = new Runnable(){
 @Override
 public void run(){
@@ -13,7 +13,6 @@ public void run(){
 Thread th = new Thread(aRunnable);
 th.start();
  */
-
 package mykiru;
 
 import java.awt.Desktop;
@@ -25,7 +24,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;  
+import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import javax.swing.JCheckBox;
@@ -36,19 +35,20 @@ import javax.swing.JLabel;
  * @author Tad
  */
 public class MyKiruGUI extends javax.swing.JFrame {
-public String currentDir = new File(".").getAbsolutePath().trim().substring(0, new File(".").getAbsolutePath().trim().length() - 1);
-public Functions fs = new mykiru.Functions();
-public Settings settings = new mykiru.Settings();
+
+    public String currentDir = new File(".").getAbsolutePath().trim().substring(0, new File(".").getAbsolutePath().trim().length() - 1);
+    public Functions fs = new mykiru.Functions();
+    public Settings settings = new mykiru.Settings();
 
 //Public variables here
-public String update_files = "http://thehallo.ws/services";
-public String Title = "MyKiru 0.1";
-public String updateurl = "http://google.com";
-public String UserIcon = "icon.png";
-public boolean Pause;
-public boolean Cancel;
-public boolean Skip_Version_Check = false;
-public boolean Close = false;
+    public String update_files = "http://thehallo.ws/services";
+    public String Title = "MyKiru 0.1";
+    public String updateurl = "http://google.com";
+    public String UserIcon = "icon.png";
+    public boolean Pause;
+    public boolean Cancel;
+    public boolean Skip_Version_Check = false;
+    public boolean Close = false;
 
     /**
      * Creates new form MyKiruGUI
@@ -57,17 +57,19 @@ public boolean Close = false;
         loadConfig();
         initComponents();
         try {
-        //this.setIconImage(new ImageIcon(getClass().getResource(UserIcon)).getImage());
-        this.setIconImage(fs.createImageIcon(UserIcon, "").getImage());
-        } catch (Exception x) {fs.w(fs.find_message("failedtoloadicon", lang(), "{User_Icon}", UserIcon), text);}
+            //this.setIconImage(new ImageIcon(getClass().getResource(UserIcon)).getImage());
+            this.setIconImage(fs.createImageIcon(UserIcon, "").getImage());
+        } catch (Exception x) {
+            fs.w(fs.find_message("failedtoloadicon", lang(), "{User_Icon}", UserIcon), text);
+        }
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
+        this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
     }
-    
-    private Runnable loadFeed(){
-        Runnable aRunnable = new Runnable(){
+
+    private Runnable loadFeed() {
+        Runnable aRunnable = new Runnable() {
             @Override
-            public void run(){
+            public void run() {
                 try {
                     feed.setPage(updateurl);
                 } catch (IOException ex) {
@@ -80,35 +82,41 @@ public boolean Close = false;
         th.start();
         return th;
     }
-    
-    private String lang(){
+
+    private String lang() {
         return fs.lang();
     }
-    
-    private void loadConfig(){
+
+    private void loadConfig() {
         String path = currentDir + "bin\\config.xml";
         File f = new File(path);
-          if(f.exists()){
+        if (f.exists()) {
             try {
                 String cf = fs.readFileAsString(path);
                 Title = fs.findsetting("title", cf);
                 updateurl = fs.findsetting("feedurl", cf);
                 update_files = fs.findsetting("updateurl", cf);
-                if("".equals(settings.UO_DIR.getText())) settings.UO_DIR.setText(fs.findsetting("DefaultUODir", cf));
-                if("false".equals(fs.findsetting("razor", cf))){settings.Razor.setVisible(false);}
-                if("false".equals(fs.findsetting("assistuo", cf))){settings.AssistUO.setVisible(false);}
+                if ("".equals(settings.UO_DIR.getText())) {
+                    settings.UO_DIR.setText(fs.findsetting("DefaultUODir", cf));
+                }
+                if ("false".equals(fs.findsetting("razor", cf))) {
+                    settings.Razor.setVisible(false);
+                }
+                if ("false".equals(fs.findsetting("assistuo", cf))) {
+                    settings.AssistUO.setVisible(false);
+                }
                 UserIcon = currentDir + "bin\\" + fs.findsetting("usericon", cf);
             } catch (Exception ex) {
                 fs.w(fs.find_message("error_reading_config", lang(), "{Error_Message}", ex.toString()), text);
             }
-          }
+        }
 
-    this.setTitle(Title);
-    settings.settitle(Title);
+        this.setTitle(Title);
+        settings.settitle(Title);
     }
 
-    public void OpenKiru(){
-            try {
+    public void OpenKiru() {
+        try {
             URI url = new URI("http://uokiru.com");
             try {
                 Desktop.getDesktop().browse(url);
@@ -116,11 +124,10 @@ public boolean Close = false;
                 fs.w(fs.find_message("failed_to_load_browser", lang(), "{Error_Message}", ex.toString()), text);
             }
         } catch (URISyntaxException ex) {
-            
+
         }
     }
-    
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -330,17 +337,17 @@ public boolean Close = false;
         loadFeed();
         jButton2.setEnabled(false);
         jButton1.setEnabled(false);
-        if("".equals(settings.UO_DIR.getText()) || settings.UO_DIR.getText() == null) {
+        if ("".equals(settings.UO_DIR.getText()) || settings.UO_DIR.getText() == null) {
             fs.w(fs.find_message("choose_ultima_dir", lang()), text);
             settings.setVisible(true);
             settings.FindDir();
-            
+
         }
         update.setText(fs.find_message("check_for_updates", lang()));
         fullclient.setText(fs.find_message("full_client_download", lang()));
         jButton2.setText(fs.find_message("pause_pause", lang()));
         jButton1.setText(fs.find_message("cancel_button", lang()));
-        
+
     }//GEN-LAST:event_formWindowOpened
 
     private void fullclientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fullclientActionPerformed
@@ -378,64 +385,79 @@ public boolean Close = false;
 
     private void fullclientMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fullclientMouseReleased
         // TODO add your handling code here:
-        Runnable aRunnable = new Runnable(){
-@Override
-public void run(){
+        Runnable aRunnable = new Runnable() {
+            @Override
+            public void run() {
 
-        try {
-           URL game = new URL(update_files + "/UOAU/fullclient.php?active");
-            URLConnection connection = game.openConnection();
-            try (BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
-                String data = "";
-                String inputLine;
-                while ((inputLine = in.readLine()) != null) {
-                 data = data + inputLine;
-                }
-                switch(data){
-                    case "false":{
-                        fs.w(fs.find_message("full_client_not_offered", lang()), text);
-                        break;
-                    }
-                    case "true":{
-                        fs.w(fs.find_message("download_full_client", lang()), text);
-                        String[] file_data = fs.full_Client(update_files);
-                        if("FAIL".equals(file_data[0])){fs.w(fs.find_message("fullclientfail", lang(), "{Error_Message}", "Error retrieving full client download location."), text); break;}
-                        Downloader file=new mykiru.Downloader();
-                        String[] args = {update_files+"/UOAU/"+file_data[1], settings.UO_DIR.getText() + "/" + file_data[1]};
-                        JLabel[] labels = {DL_current, DL_speed};
-                        JCheckBox[] pc = {Paused, Canceled};
-                        try {
-                            onStartDL();
-                            file.main(args, sub_progress, labels, pc);
-                            if(Canceled.isSelected() == true) {fs.w(fs.find_message("fullclientcancel", lang()), text); Canceled.setEnabled(false); Cancel = false; onFinishDL(); break; }
-                            fs.w(fs.find_message("install_location", lang()), text);
-                            ExtractFile ex = new mykiru.ExtractFile();
-                            onFinishDL();
-                            if(ex.Extract(args[1], text)==false){fs.w(fs.find_message("install_error", lang()), text);
-                            } else {fs.w(fs.find_message("install_success", lang()), text);
-                            }
-                            
-                            if(Paused.isSelected() == true){Paused.setSelected(false); Pause = false;}
-                            if(Canceled.isSelected() == true) {fs.w(fs.find_message("fullclientcancel", lang()), text); Canceled.setEnabled(false); Cancel = false;}
-                        } catch (Exception ex) {
-                            fs.w(fs.find_message("fullclientfail", lang(), "{Error_Message}", ex.toString()), text);
+                try {
+                    URL game = new URL(update_files + "/UOAU/fullclient.php?active");
+                    URLConnection connection = game.openConnection();
+                    try (BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
+                        String data = "";
+                        String inputLine;
+                        while ((inputLine = in.readLine()) != null) {
+                            data = data + inputLine;
                         }
-                        
-                        break;
+                        switch (data) {
+                            case "false": {
+                                fs.w(fs.find_message("full_client_not_offered", lang()), text);
+                                break;
+                            }
+                            case "true": {
+                                fs.w(fs.find_message("download_full_client", lang()), text);
+                                String[] file_data = fs.full_Client(update_files);
+                                if ("FAIL".equals(file_data[0])) {
+                                    fs.w(fs.find_message("fullclientfail", lang(), "{Error_Message}", "Error retrieving full client download location."), text);
+                                    break;
+                                }
+                                Downloader file = new mykiru.Downloader();
+                                String[] args = {update_files + "/UOAU/" + file_data[1], settings.UO_DIR.getText() + "/" + file_data[1]};
+                                JLabel[] labels = {DL_current, DL_speed};
+                                JCheckBox[] pc = {Paused, Canceled};
+                                try {
+                                    onStartDL();
+                                    file.main(args, sub_progress, labels, pc);
+                                    if (Canceled.isSelected() == true) {
+                                        fs.w(fs.find_message("fullclientcancel", lang()), text);
+                                        Canceled.setEnabled(false);
+                                        Cancel = false;
+                                        onFinishDL();
+                                        break;
+                                    }
+                                    fs.w(fs.find_message("install_location", lang()), text);
+                                    ExtractFile ex = new mykiru.ExtractFile();
+                                    onFinishDL();
+                                    if (ex.Extract(args[1], text) == false) {
+                                        fs.w(fs.find_message("install_error", lang()), text);
+                                    } else {
+                                        fs.w(fs.find_message("install_success", lang()), text);
+                                    }
+
+                                    if (Paused.isSelected() == true) {
+                                        Paused.setSelected(false);
+                                        Pause = false;
+                                    }
+                                    if (Canceled.isSelected() == true) {
+                                        fs.w(fs.find_message("fullclientcancel", lang()), text);
+                                        Canceled.setEnabled(false);
+                                        Cancel = false;
+                                    }
+                                } catch (Exception ex) {
+                                    fs.w(fs.find_message("fullclientfail", lang(), "{Error_Message}", ex.toString()), text);
+                                }
+
+                                break;
+                            }
+                        }
                     }
+                } catch (Exception e) {
+                    fs.w(fs.find_message("fullclientfail", lang(), "{Error_Message}", e.toString()), text);
                 }
+
             }
-        } catch (Exception e) {
-        fs.w(fs.find_message("fullclientfail", lang(), "{Error_Message}", e.toString()), text);
-        }
-        
-        
-        
-        
-}
-};
-Thread th = new Thread(aRunnable);
-th.start();
+        };
+        Thread th = new Thread(aRunnable);
+        th.start();
     }//GEN-LAST:event_fullclientMouseReleased
 
     private void jMenuItem3MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem3MouseReleased
@@ -445,18 +467,18 @@ th.start();
 
     private void jButton1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseReleased
         // TODO add your handling code here:
-        if(Cancel == false){
-        Cancel = true;
-        Canceled.setSelected(true);
+        if (Cancel == false) {
+            Cancel = true;
+            Canceled.setSelected(true);
         } else {
-        Cancel = false;
-        Canceled.setSelected(false); 
+            Cancel = false;
+            Canceled.setSelected(false);
         }
     }//GEN-LAST:event_jButton1MouseReleased
 
     private void jButton2MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseReleased
         // TODO add your handling code here:
-        if(Pause == false){
+        if (Pause == false) {
             Pause = true;
             Paused.setSelected(true);
             jButton2.setText(fs.find_message("pause_continue", lang()));
@@ -469,92 +491,104 @@ th.start();
 
     private void updateMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updateMouseReleased
         // TODO add your handling code here:
-        
-        Runnable aRunnable = new Runnable(){
-        @Override
-        public void run(){
-            onStartDL(false);
-            UpdateCheck uc = new UpdateCheck();
-            if(uc.Check(update_files, text, KIRU_VERSION) || Skip_Version_Check) {
-                fs.w(fs.find_message("filelist", lang()), text);
-                ArrayList files = fs.GetFiles(update_files);
-                if(files.get(0) != "FAIL") {
-                fs.w("Update Check: " + files.toString(), text);
+
+        Runnable aRunnable = new Runnable() {
+            @Override
+            public void run() {
+                onStartDL(false);
+                UpdateCheck uc = new UpdateCheck();
+                if (uc.Check(update_files, text, KIRU_VERSION) || Skip_Version_Check) {
+                    fs.w(fs.find_message("filelist", lang()), text);
+                    ArrayList files = fs.GetFiles(update_files);
+                    if (files.get(0) != "FAIL") {
+                        fs.w(fs.find_message("filecount", lang(), "{File_Count}", fs.inttostring(files.size())), text);
+                        main_progress.setMaximum(files.size());
+                        main_progress.setValue(0);
+                        String fn, hash;
+                        for (int i = 0; i < files.size(); i++) {
+                            fn = (String) ((ArrayList) files.get(i)).get(0);
+                            hash = (String) ((ArrayList) files.get(i)).get(2);
+                            System.out.print(fn + "\n");
+                            if (fs.allowed(fn, settings.allowed) == false) {
+                                fs.w(fs.find_message("notallowed", lang(), "{FileName}", fn), feed);
+                                continue;
+                            }
+                            try {
+                                if (fs.hash_is_same(hash, fs.getmd(settings.UO_DIR.getText() + "/" + fn))) {
+                                    fs.w(fs.find_message("skipfile", lang(), "{FileName}", fn), text);
+                                    continue;
+                                } else {
+                                    fs.w(fs.find_message("downloadfile", lang(), "{FileName}", fn), text);
+                                }
+                            } catch (Exception ex) {
+                                fs.w(fs.find_message("errordownloadingfile", lang(), "{FileName}", fn).replace("{Error_Message}", ex.toString()), text);
+                                continue;
+                            }
+
+                            Downloader file = new mykiru.Downloader();
+                            String[] args = {update_files + "/UOAU/files/" + fn, settings.UO_DIR.getText() + "/" + fn};
+                            JLabel[] labels = {DL_current, DL_speed};
+                            JCheckBox[] pc = {Paused, Canceled};
+                            //fs.w("Downloading " + fn + "...", text);
+                            try {
+                                onStartDL();
+                                file.main(args, sub_progress, labels, pc);
+
+                                if (pc[1].isSelected()) {
+                                    pc[1].setSelected(false);
+                                    Cancel = false;
+                                    fs.w(fs.find_message("download_canceled", lang(), "{FileName}", fn), text);
+                                } else {
+                                    fs.w(fs.find_message("downloadsuccess", lang(), "{FileName}", fn), text);
+                                }
+                                main_progress.setValue(main_progress.getValue() + 1);
+
+                                onFinishDL();
+
+                            } catch (Exception ex) {
+                            }
+
+                        }
+                    } else {
+                        fs.w(fs.find_message("file_list_fail", lang()), text);
+                    }
+                } else {//fs.w("Returned false", text);
+
+                }
+                String[] uod = {settings.UO_DIR.getText()};
+                if (settings.Razor.isSelected()) {
+                    fs.Start_Program(fs.razorPath, "Razor.exe");
+                }
+                if (settings.AssistUO.isSelected()) {
+                    fs.Start_Program(fs.assistUOPath, "AssistUO.exe");
+                }
+                if (settings.Client.isSelected()) {
+                    fs.Start_Program(uod, "client.exe");
+                }
+                if (settings.Close.isSelected()) {
+                    Close = true;
+                }
+
                 onFinishDL(false);
-                if(true)
-                    return;
-                fs.w(fs.find_message("filecount", lang(), "{File_Count}", fs.inttostring(files.size())), text);
-                main_progress.setMaximum(files.size());
-                main_progress.setValue(0);
-                String fn, hash;
-                   for(int i = 0; i < files.size();i++){  
-                       fn = (String)((ArrayList)files.get(i)).get(0);
-                       hash = (String)((ArrayList)files.get(i)).get(2);
-                       System.out.print( fn + "\n");  
-                       if(fs.allowed(fn, settings.allowed) == false) { fs.w(fs.find_message("notallowed", lang(), "{FileName}", fn), feed); continue;}
-                    try {
-                        if(fs.hash_is_same(hash, fs.getmd(settings.UO_DIR.getText() + "/" + fn))) { fs.w(fs.find_message("skipfile", lang(), "{FileName}", fn), text); continue; }
-                        else {fs.w(fs.find_message("downloadfile", lang(), "{FileName}", fn), text);
-                        }
-                    } catch (Exception ex) {
-                        fs.w(fs.find_message("errordownloadingfile", lang(), "{FileName}", fn).replace("{Error_Message}", ex.toString()), text);
-                        continue;
-                    }
-                       
-                       Downloader file=new mykiru.Downloader();
-                       String[] args = {update_files+"/UOAU/files/"+fn, settings.UO_DIR.getText() + "/" + fn};
-                       JLabel[] labels = {DL_current, DL_speed};
-                       JCheckBox[] pc = {Paused, Canceled};
-                       //fs.w("Downloading " + fn + "...", text);
-                    try {
-                        onStartDL();
-                        file.main(args, sub_progress, labels, pc);
-                        
-                        if(pc[1].isSelected()){
-                            pc[1].setSelected(false);
-                            Cancel = false;
-                            fs.w(fs.find_message("download_canceled", lang(), "{FileName}", fn), text);
-                        } else {
-                        fs.w(fs.find_message("downloadsuccess", lang(), "{FileName}", fn), text);    
-                        }
-                        main_progress.setValue(main_progress.getValue() + 1);
-                        
-                        onFinishDL();
-                        
-                    } catch (Exception ex) {
-                    }
-                       
-                   }
-            } else { fs.w(fs.find_message("file_list_fail", lang()), text); }
             }
-            else {//fs.w("Returned false", text);
-                
-            }
-            String[] uod = {settings.UO_DIR.getText()};
-            if(settings.Razor.isSelected()) fs.Start_Program(fs.razorPath, "Razor.exe");
-            if(settings.AssistUO.isSelected()) fs.Start_Program(fs.assistUOPath, "AssistUO.exe");
-            if(settings.Client.isSelected()) fs.Start_Program(uod, "client.exe");
-            if(settings.Close.isSelected()) Close = true;
-            
-            onFinishDL(false);
-        }
         };
         Thread th = new Thread(aRunnable);
         th.start();
-        
+
     }//GEN-LAST:event_updateMouseReleased
     private void updateActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
     }
- 
-    public void onStartDL(){
+
+    public void onStartDL() {
         jMenu1.setEnabled(false);
         update.setEnabled(false);
         fullclient.setEnabled(false);
         jButton2.setEnabled(true);
         jButton1.setEnabled(true);
     }
-    public void onFinishDL(){
+
+    public void onFinishDL() {
         jMenu1.setEnabled(true);
         update.setEnabled(true);
         fullclient.setEnabled(true);
@@ -563,39 +597,35 @@ th.start();
         DL_speed.setText("");
         DL_current.setText("");
     }
-    public void onStartDL(boolean e){
+
+    public void onStartDL(boolean e) {
         jMenu1.setEnabled(false);
         update.setEnabled(false);
         fullclient.setEnabled(false);
     }
-    public void onFinishDL(boolean e){
+
+    public void onFinishDL(boolean e) {
         jMenu1.setEnabled(true);
         update.setEnabled(true);
         fullclient.setEnabled(true);
         DL_speed.setText("");
         DL_current.setText("");
-        if(Close) {
+        if (Close) {
             System.exit(0);
             dispose();
             Thread[] tarray = {};
             Thread.enumerate(tarray);
-            for(Thread s : tarray){
+            for (Thread s : tarray) {
                 s.interrupt();
             }
         }
     }
-    
-    
-    
 
-    
-    
-    
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        
+
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.

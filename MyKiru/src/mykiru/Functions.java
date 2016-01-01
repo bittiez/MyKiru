@@ -14,6 +14,10 @@ th.start();
  */
 package mykiru;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.File;
@@ -33,8 +37,7 @@ import java.util.prefs.Preferences;
 import javax.swing.ImageIcon;
 import javax.swing.JEditorPane;
 import javax.swing.JTextField;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
+
 
 /**
  *
@@ -98,20 +101,25 @@ public ArrayList GetFiles(String URL){
         } catch (Exception e) {return fail;}
         ArrayList file_data = new ArrayList(); 
         try{
-            JSONObject json = (JSONObject)new JSONParser().parse(files);
-            Iterator<?> keys = json.entrySet().iterator();
-            while(keys.hasNext()){
-                Map.Entry entry = (Map.Entry)keys.next();
-                ArrayList newFile = new ArrayList(entry.getValue());
+            JsonParser parser = new JsonParser();
+            JsonElement element = parser.parse(files);
+            if (element.isJsonObject()) {
+                JsonObject jsonOb = element.getAsJsonObject();
+                JsonArray datasets = jsonOb.get("files").getAsJsonArray();
                 
-                Object[] values = (Object[])entry.getValue();
-                newFile.add(values[0]);
-                newFile.add(values[1]);
-                newFile.add(values[2]);
-                file_data.add(newFile);
+                for (int i = 0; i < datasets.size(); i++) {
+                    JsonObject dataset = datasets.get(i).getAsJsonObject();
+                    ArrayList newFile = new ArrayList();
+                    newFile.add(dataset.get("filename").getAsString());
+                    newFile.add(dataset.get("size").getAsString());
+                    newFile.add(dataset.get("hash").getAsString());
+                    file_data.add(newFile);
+                }
             }
             
-        } catch(Exception e) {System.out.println(e); return fail;}
+        } catch(Exception e) {
+            e.printStackTrace();
+            System.out.println(); return fail;}
       return file_data;
 }
 

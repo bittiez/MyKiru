@@ -4,14 +4,15 @@
  */
 package mykiru;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import javax.swing.JEditorPane;
 import javax.swing.JMenu;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 
 
 /**
@@ -47,8 +48,13 @@ public class UpdateCheck {
     
     private boolean read_text(String paramStr, JMenu jLabel10, JEditorPane text){
         try{
-            JSONObject json = (JSONObject)new JSONParser().parse(paramStr);
-            String version = json.get("kiru_version").toString();
+            String version = "";
+            JsonParser parser = new JsonParser();
+            JsonElement element = parser.parse(paramStr);
+            if (element.isJsonObject()) {
+                JsonObject jsonOb = element.getAsJsonObject();
+                version = jsonOb.get("kiru_version").getAsString();
+            }
             
             if(Double.parseDouble(version) > Double.parseDouble(jLabel10.getText().split(" ")[1])){
                 fs.w(fs.find_message("update_your_kiru", fs.lang(), "{Server_Kiru_Version}", version)
